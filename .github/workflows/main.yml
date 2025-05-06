@@ -16,20 +16,20 @@ jobs:
 
       - name: Set Git Identity
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
 
       - name: Configure Git to Merge
         run: git config pull.rebase false
 
-      - name: Pull from Hugging Face (allow unrelated histories)
-        run: git pull --allow-unrelated-histories https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_Model main
-      - name: Pull and resolve README.md conflict (prefer local)
+      - name: Pull and resolve README.md conflict (keep local)
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           git pull --allow-unrelated-histories https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_Model main || true
           git checkout --ours README.md || true
-          git add README.md
-          git commit -m "Resolve conflict in README.md by keeping local version" || true
+          git add README.md || true
+          git commit -m "Auto-resolve README.md conflict by keeping local version" || true
 
       - name: Push to Hugging Face
         env:
