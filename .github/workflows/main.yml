@@ -24,6 +24,12 @@ jobs:
 
       - name: Pull from Hugging Face (allow unrelated histories)
         run: git pull --allow-unrelated-histories https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_Model main
+      - name: Pull and resolve README.md conflict (prefer local)
+        run: |
+          git pull --allow-unrelated-histories https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_Model main || true
+          git checkout --ours README.md || true
+          git add README.md
+          git commit -m "Resolve conflict in README.md by keeping local version" || true
 
       - name: Push to Hugging Face
         env:
