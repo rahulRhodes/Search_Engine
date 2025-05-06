@@ -20,13 +20,14 @@ jobs:
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
 
-      - name: Add Hugging Face remote and pull latest
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      - name: Add Hugging Face remote and merge latest
+         env:
+            HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git remote add hf https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_LLM
-          git fetch hf
-          git rebase hf/main
+            git remote add hf https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_LLM
+            git fetch hf
+            git merge -X theirs hf/main --allow-unrelated-histories || true
+
 
       - name: Push to Hugging Face
         env:
