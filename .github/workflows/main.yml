@@ -16,7 +16,7 @@ jobs:
       - name: Configure Git to Merge
         run: git config pull.rebase false
       - name: Pull from hub to avoid conflicts
-        run: git pull https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_Model main
+        run: git pull --allow-unrelated-histories https://rahulRhodes:$HF_TOKEN@huggingface.co/spaces/rahulRhodes/Search_Engine_Model main
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
